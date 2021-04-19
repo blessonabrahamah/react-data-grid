@@ -48,7 +48,8 @@ class InteractionMasks extends React.Component {
     cellNavigationMode: PropTypes.oneOf([
       CellNavigationMode.NONE,
       CellNavigationMode.LOOP_OVER_ROW,
-      CellNavigationMode.CHANGE_ROW
+      CellNavigationMode.CHANGE_ROW,
+      CellNavigationMode.NO_TABBING
     ]).isRequired,
     eventBus: PropTypes.object.isRequired,
     contextMenu: PropTypes.element,
@@ -197,7 +198,9 @@ class InteractionMasks extends React.Component {
     } else if (e.keyCode === keyCodes.Escape) {
       this.onPressEscape(e);
     } else if (e.keyCode === keyCodes.Tab) {
-      this.onPressTab(e);
+      if (this.props.cellNavigationMode !==  CellNavigationMode.NO_TABBING) {
+        this.onPressTab(e);
+      }
     } else if (this.isKeyboardNavigationEvent(e)) {
       this.changeCellFromEvent(e);
     } else if (isKeyPrintable(e.keyCode) || [keyCodes.Backspace, keyCodes.Delete, keyCodes.Enter].indexOf(e.keyCode) !== -1) {
